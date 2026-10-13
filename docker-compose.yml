@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # 1. MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: ilampirai-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: ilampirai_kitchens_db
+    volumes:
+      - mongo_data:/data/db
+
+  # 2. Spring Boot REST Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ilampirai-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/ilampirai_kitchens_db
+      SPRING_PROFILES_ACTIVE: default
+    depends_on:
+      - mongodb
+
+  # 3. Frontend Web Server (Nginx)
+  frontend:
+    image: nginx:alpine
+    container_name: ilampirai-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:

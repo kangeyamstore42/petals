@@ -1,0 +1,12 @@
+﻿.env
+.env.*
+!.env.example
+application-local.properties
+application-prod.properties
+*.pem
+*.key
+target/
+backend/target/
+node_modules/
+.idea/
+.vscode/
