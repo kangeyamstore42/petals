@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Return &amp; Refund Policy | Petals Couture</title>
+    <meta name="description"
+        content="Return and refund policy of Petals Couture. Please read before making a purchase.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --g-900: #0d3a20;
+            --g-800: #14532d;
+            --g-700: #166534;
+            --g-600: #15803d;
+            --leaf: #4d8a2c;
+            --yellow: #fde047;
+            --amber: #f59e0b;
+            --orange: #ea580c;
+            --cream: #f6fbea;
+            --cream-2: #fffbe8;
+            --ink: #123a24;
+            --text: #eaf6ec;
+            --serif: "Playfair Display", Georgia, "Times New Roman", serif;
+            --sans: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: var(--sans);
+            color: var(--text);
+            line-height: 1.65;
+            background:
+                radial-gradient(circle at 100% 100%, rgba(120, 160, 40, 0.45), transparent 45%),
+                linear-gradient(135deg, var(--g-900) 0%, var(--g-700) 55%, #1b6b36 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        .wrap {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 56px 24px 72px;
+        }
+
+        /* ---------- Header ---------- */
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .brand {
+            display: inline-block;
+            font-family: var(--serif);
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.14em;
+            color: var(--yellow);
+            background: rgba(255, 255, 255, 0.14);
+            padding: 9px 20px;
+            border-radius: 999px;
+            margin-bottom: 26px;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        .icons .line {
+            width: 56px;
+            height: 3px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, transparent, var(--yellow));
+        }
+
+        .icons .line.r {
+            background: linear-gradient(270deg, transparent, var(--yellow));
+        }
+
+        .icons svg {
+            width: 46px;
+            height: 46px;
+            display: block;
+        }
+
+        h1 {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: clamp(2rem, 7vw, 3.6rem);
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 14px;
+        }
+
+        h1 em {
+            font-style: italic;
+            color: var(--yellow);
+        }
+
+        .subtitle {
+            color: #d4ecd9;
+            font-size: 1.08rem;
+        }
+
+        /* ---------- Cards ---------- */
+        .card {
+            border-radius: 24px;
+            padding: 36px 40px;
+            margin-bottom: 28px;
+        }
+
+        .card.dark {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.06));
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .card.navy {
+            background: linear-gradient(135deg, rgba(8, 40, 22, 0.55), rgba(20, 83, 45, 0.45));
+            border: 1px solid rgba(253, 224, 71, 0.25);
+        }
+
+        .card.light {
+            background: linear-gradient(135deg, var(--cream), var(--cream-2));
+            color: var(--ink);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .card-title::before {
+            content: "";
+            width: 4px;
+            height: 38px;
+            border-radius: 4px;
+            background: linear-gradient(180deg, var(--yellow), var(--orange));
+            flex: none;
+        }
+
+        .card-title svg {
+            width: 34px;
+            height: 34px;
+            flex: none;
+        }
+
+        h2 {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: clamp(1.35rem, 4.4vw, 2rem);
+            line-height: 1.25;
+        }
+
+        .dark h2,
+        .navy h2 {
+            color: #fff;
+        }
+
+        .light h2 {
+            color: var(--g-700);
+        }
+
+        .inner {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 16px;
+            padding: 22px 26px;
+        }
+
+        .inner p+p {
+            margin-top: 12px;
+        }
+
+        .light .inner {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #dcebc8;
+            color: var(--ink);
+        }
+
+        .lead {
+            margin-bottom: 20px;
+        }
+
+        /* ---------- Exceptions ---------- */
+        .exceptions {
+            list-style: none;
+            display: grid;
+            gap: 16px;
+        }
+
+        .exceptions li {
+            display: flex;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px 24px;
+        }
+
+        .exceptions li::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 11px;
+            flex: none;
+            background: var(--yellow);
+        }
+
+        .exceptions li.alt::before {
+            background: #fb923c;
+        }
+
+        .exceptions strong {
+            color: var(--yellow);
+            font-weight: 600;
+        }
+
+        .exceptions li.alt strong {
+            color: #fdba74;
+        }
+
+        .days {
+            color: var(--yellow);
+            font-weight: 700;
+        }
+
+        .alt .days {
+            color: #fdba74;
+        }
+
+        /* ---------- Reporting ---------- */
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #dcebc8;
+            border-radius: 16px;
+            padding: 20px 24px;
+            color: var(--ink);
+        }
+
+        .step.full {
+            grid-column: 1 / -1;
+        }
+
+        .step svg {
+            width: 30px;
+            height: 30px;
+            flex: none;
+        }
+
+        .resolve {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid #f3e3a0;
+            border-radius: 16px;
+            padding: 20px 24px;
+            color: var(--ink);
+        }
+
+        /* ---------- Final ---------- */
+        .agree {
+            margin-top: 18px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(253, 224, 71, 0.25);
+            border-radius: 14px;
+            padding: 16px 20px;
+        }
+
+        .agree strong {
+            color: var(--yellow);
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #a9cfb2;
+            font-size: 0.9rem;
+        }
+
+        footer span {
+            font-family: var(--serif);
+            color: var(--yellow);
+            letter-spacing: 0.08em;
+        }
+
+        /* ---------- Mobile ---------- */
+        @media (max-width: 720px) {
+            .wrap {
+                padding: 36px 16px 48px;
+            }
+
+            header {
+                margin-bottom: 32px;
+            }
+
+            .icons svg {
+                width: 38px;
+                height: 38px;
+            }
+
+            .icons .line {
+                width: 36px;
+            }
+
+            .subtitle {
+                font-size: 0.98rem;
+            }
+
+            .card {
+                border-radius: 20px;
+                padding: 24px 18px;
+                margin-bottom: 20px;
+            }
+
+            .card-title {
+                gap: 12px;
+                margin-bottom: 18px;
+            }
+
+            .card-title::before {
+                height: 30px;
+            }
+
+            .card-title svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .inner {
+                padding: 16px;
+            }
+
+            .exceptions li {
+                padding: 16px;
+                gap: 12px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .step {
+                padding: 16px;
+            }
+
+            .resolve {
+                padding: 16px;
+            }
+
+            .agree {
+                padding: 14px;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            body {
+                font-size: 15px;
+            }
+
+            .card {
+                padding: 20px 14px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="wrap">
+
+        <header>
+            <div class="brand">PETALS COUTURE</div>
+            <div class="icons" aria-hidden="true">
+                <span class="line"></span>
+                <svg viewBox="0 0 48 48" fill="none">
+                    <rect x="3" y="3" width="42" height="42" rx="10" fill="#f59e0b" />
+                    <path d="M15 22a10 10 0 0 1 17-5l3 3M33 26a10 10 0 0 1-17 5l-3-3" stroke="#fff" stroke-width="3.2"
+                        stroke-linecap="round" />
+                    <path d="M35 13v7h-7M13 35v-7h7" stroke="#fff" stroke-width="3.2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <svg viewBox="0 0 48 48" fill="none">
+                    <path d="M10 10l28 28M38 10L10 38" stroke="#fb923c" stroke-width="7" stroke-linecap="round" />
+                </svg>
+                <span class="line r"></span>
+            </div>
+            <h1>Return &amp; Refund <em>Policy</em></h1>
+            <p class="subtitle">Please read our policy carefully before making a purchase</p>
+        </header>
+
+        <section class="card dark">
+            <div class="card-title">
+                <svg viewBox="0 0 40 40" aria-hidden="true">
+                    <circle cx="20" cy="20" r="18" fill="#fde047" />
+                </svg>
+                <h2>No Refund Policy</h2>
+            </div>
+            <div class="inner">
+                <p>At Petals Couture, we do not offer any refunds under any circumstances once an order has been placed.
+                    We highly encourage customers to review their orders carefully before confirming the purchase.
+                    Please ensure that you are fully satisfied with your selection before completing the transaction.
+                </p>
+            </div>
+        </section>
+
+        <section class="card light">
+            <div class="card-title">
+                <svg viewBox="0 0 40 40" aria-hidden="true">
+                    <polygon points="20,3 35,11.5 35,28.5 20,37 5,28.5 5,11.5" fill="#fde047" />
+                </svg>
+                <h2>No Return Policy</h2>
+            </div>
+            <div class="inner">
+                <p>We also have a strict no-return policy in place. Once a product has been purchased, we do not accept
+                    any returns. Please ensure that you check all details regarding size, color, and design before
+                    placing your order.</p>
+                <p>If you are unsure about any product, feel free to contact our support team for more information
+                    before completing your purchase.</p>
+            </div>
+        </section>
+
+        <section class="card navy">
+            <div class="card-title">
+                <svg viewBox="0 0 40 40" aria-hidden="true">
+                    <path d="M20 3l5 11.5 12.5 1-9.5 8.2 3 12.3L20 29.5 9 36l3-12.3L2.500 15.500 15 14.500z"
+                        fill="#fde047" />
+                </svg>
+                <h2>Exceptions to the Policy</h2>
+            </div>
+            <p class="lead">Although we do not offer returns or refunds in most cases, we may consider exceptions in the
+                following instances:</p>
+            <ul class="exceptions">
+                <li>
+                    <p><strong>Damaged or Defective Products:</strong> If the product you received is damaged or
+                        defective, you must report the issue within <span class="days">10 days</span> of receiving your
+                        order. We will assess the situation and may offer a replacement or credit depending on the
+                        nature of the issue.</p>
+                </li>
+                <li class="alt">
+                    <p><strong>Wrong Product Received:</strong> If the product you received is not as described on our
+                        website (wrong color, size, or product), please report it to us within <span class="days">10
+                            days</span> of delivery, and we may offer a resolution.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section class="card light">
+            <div class="card-title">
+                <svg viewBox="0 0 40 40" aria-hidden="true">
+                    <path d="M8 3h16l8 8v26H8z" fill="#15803d" />
+                    <path d="M24 3v8h8" fill="#86c45a" />
+                </svg>
+                <h2>Process for Reporting Issues</h2>
+            </div>
+            <p class="lead">If you encounter any issues with your order, please get in touch with our customer service
+                team immediately. Please provide:</p>
+            <div class="steps">
+                <div class="step">
+                    <svg viewBox="0 0 32 32" aria-hidden="true">
+                        <rect x="1" y="1" width="30" height="30" rx="7" fill="#15803d" /><text x="16" y="21.500"
+                            text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="14"
+                            fill="#fff">ID</text>
+                    </svg>
+                    <span>Your order number</span>
+                </div>
+                <div class="step">
+                    <svg viewBox="0 0 32 32" aria-hidden="true">
+                        <rect x="2" y="9" width="28" height="19" rx="4" fill="#4b5563" />
+                        <rect x="10" y="5" width="12" height="6" rx="2" fill="#4b5563" />
+                        <circle cx="16" cy="18.500" r="6" fill="#d1d5db" />
+                        <circle cx="16" cy="18.500" r="3.500" fill="#374151" />
+                    </svg>
+                    <span>Photos of the product (if applicable)</span>
+                </div>
+                <div class="step full">
+                    <svg viewBox="0 0 32 32" aria-hidden="true">
+                        <rect x="5" y="4" width="22" height="26" rx="3" fill="#e8c9a0" />
+                        <rect x="11" y="2" width="10" height="6" rx="2" fill="#9ca3af" />
+                        <path d="M10 14h12M10 19h12M10 24h8" stroke="#7c6a55" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    <span>A detailed description of the issue</span>
+                </div>
+            </div>
+            <div class="resolve">Our team will evaluate your request and work with you to find the best solution.</div>
+        </section>
+
+        <section class="card dark">
+            <div class="card-title">
+                <svg viewBox="0 0 40 40" aria-hidden="true">
+                    <path d="M24 4l12 12-5 2-6 6 1 7-3 3-7-7-9 9-2-2 9-9-7-7 3-3 7 1 6-6z" fill="#fde047" />
+                </svg>
+                <h2>Final Notes</h2>
+            </div>
+            <div class="inner">
+                <p>Please review your orders thoroughly before confirming your purchase, as we will not accept returns
+                    or offer refunds unless the product is defective or not as described.</p>
+                <div class="agree">&#9878;&#65039; By placing an order with <strong>Petals Couture</strong>, you agree
+                    to these terms and conditions.</div>
+            </div>
+        </section>
+
+        <footer>&copy; <span>Petals Couture</span>. All rights reserved.</footer>
+
+    </main>
+</body>
+
+</html>

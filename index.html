@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ilampirai Kitchens — Authentic South Indian Masalas, Combos & Gourmet Kitchen</title>
+  <meta name="description"
+    content="Ilampirai Kitchens brings you 100% stone-ground traditional South Indian spices, daily sambar & rasam powders, gunpowder idli podis, pickles, and curated 1-in-1 to 10-in-1 combo packs.">
+  <link rel="stylesheet" href="css/style.css?v=14">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🍱</text></svg>">
+</head>
+
+<body>
+
+  <!-- ===================== ANNOUNCEMENT TOP BAR ===================== -->
+  <div class="top-announcement">
+    <span>🎉 Festive Offer: Use code <strong>ILAMPIRAI10</strong> for 10% OFF! Free shipping across India on orders
+      above ₹499!</span>
+  </div>
+
+  <!-- ===================== NAVIGATION HEADER ===================== -->
+  <header class="site-navbar">
+    <div class="container nav-container">
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu(true)"
+        aria-label="Open Navigation Menu">☰</button>
+
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo">
+        <img src="assets/images/Gemini_Generated_Image_tr3gbptr3gbptr3g.png" alt="Petals Couture Logo"
+          class="brand-image">
+
+        <div class="brand-text">
+          <h1>Petals Couture</h1>
+          <span>Tradition &middot; Purity &middot; Taste</span>
+        </div>
+      </a>
+
+      <!-- Live Search (Redirects to Catalog) -->
+      <div class="nav-search">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="navSearchInput" placeholder="Search Sambar Podi, Combos, Pickles...">
+        </div>
+      </div>
+
+      <!-- Nav Links -->
+      <nav class="main-nav-bar">
+        <ul class="nav-links" id="mainHeaderNavLinks">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="catalog.html" class="nav-link">All Products</a></li>
+        </ul>
+      </nav>
+
+      <!-- Nav Actions -->
+      <div class="nav-actions">
+        <a href="catalog.html" class="action-btn nav-wishlist-btn" title="Wishlist" style="text-decoration: none;">
+          <span>❤️</span>
+          <span class="badge-count" id="navWishlistCount">0</span>
+        </a>
+
+        <a href="cart.html" class="action-btn" title="Shopping Cart" style="text-decoration: none;">
+          <span>🛒</span>
+          <span class="badge-count" id="navCartCount">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Side Drawer Navigation -->
+  <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu(false)"></div>
+  <aside id="mobileMenuDrawer" class="mobile-menu-drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand-logo" style="gap: 10px;">
+        <div class="brand-icon" style="width: 36px; height: 36px; font-size: 20px;">🍱</div>
+        <div class="brand-text">
+          <h2 style="font-size: 17px; color: var(--primary-hover); margin: 0; line-height: 1.1;">Ilampirai Kitchens</h2>
+          <span style="font-size: 9px; color: var(--accent-orange); font-weight: 700; letter-spacing: 1px;">TRADITION
+            &middot; PURITY</span>
+        </div>
+      </div>
+      <button class="mobile-drawer-close" onclick="toggleMobileMenu(false)" aria-label="Close Navigation">✕</button>
+    </div>
+
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-section-title">Navigation</div>
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="index.html" class="mobile-nav-item active" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">🏠</span> <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="catalog.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">🛍️</span> <span>All Products</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="mobile-drawer-section-title">Explore Categories</div>
+      <ul class="mobile-nav-list" id="mobileCategoriesList">
+        <!-- Dynamically rendered via JS -->
+      </ul>
+
+      <div class="mobile-drawer-section-title">Quick Actions</div>
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="cart.html" class="mobile-nav-item">
+            <span class="m-icon">🛒</span> <span>Shopping Cart</span>
+            <span class="badge badge-orange" id="mobileDrawerCartBadge" style="margin-left: auto;">0</span>
+          </a>
+        </li>
+        <li>
+          <a href="track-order.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">🚚</span> <span>Track Order</span>
+          </a>
+        </li>
+        <li>
+          <a href="catalog.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">❤️</span> <span>Saved Wishlist</span>
+            <span class="badge badge-gold" id="mobileDrawerWishlistBadge" style="margin-left: auto;">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ===================== HERO SECTION ===================== -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-banner">
+        <div class="hero-content">
+          <span class="hero-tag">✨ Heritage South Indian Culinary Craft</span>
+          <h1 class="hero-title">Pure. Stone Ground. <br><span>Handcrafted Flavors</span></h1>
+          <p class="hero-description">
+            Experience the authentic taste of Tamil Nadu village kitchens. Roasted in small batches with cold-pressed
+            oils, zero preservatives, and grandma’s time-tested spice ratios.
+          </p>
+          <div class="hero-cta">
+            <a href="catalog.html" class="btn btn-accent btn-lg" style="text-decoration: none;">
+              🛍️ Explore All Products
+            </a>
+            <a href="catalog.html?cat=combos" class="btn btn-secondary btn-lg" style="text-decoration: none;">
+              🍱 View Multi Combos
+            </a>
+          </div>
+          <div class="hero-highlights">
+            <div class="highlight-item"><span class="icon">🌿</span> 100% Natural</div>
+            <div class="highlight-item"><span class="icon">🪨</span> Stone Ground</div>
+            <div class="highlight-item"><span class="icon">🚚</span> Freshly Packed</div>
+          </div>
+        </div>
+
+        <div class="hero-card-visual">
+          <div class="combo-visual-box" id="heroFeaturedBox" style="transition: opacity 0.4s ease, transform 0.4s ease;">
+            <span class="combo-badge-floating" id="heroFeatureBadge">🔥 Special 3-in-1 Combo Pack</span>
+            <div class="combo-img-large" id="heroFeatureMedia">🍱</div>
+            <h3 class="combo-title" id="heroFeatureTitle">Sambar + Rasam + Idli Podi</h3>
+            <p id="heroFeatureDesc" style="font-size: 13px; opacity: 0.9; margin-bottom: 12px;">The quintessential South Indian morning &
+              lunch trio.</p>
+            <div class="combo-price-tag" id="heroFeaturePrice">₹299 <span
+                style="font-size: 14px; text-decoration: line-through; opacity: 0.7;">₹380</span></div>
+            <a href="product.html?id=prod-3" id="heroFeatureBtn" class="btn btn-primary btn-block"
+              style="text-decoration: none; text-align: center;">
+              Order Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CATEGORIES STRIP ===================== -->
+  <section class="section" style="padding-top: 10px;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2>Explore Our Heritage Kitchen</h2>
+          <p>Select a category to view traditional blends, seasonings, and festival assortments in our catalog</p>
+        </div>
+        <a href="catalog.html" class="btn btn-secondary btn-sm" style="text-decoration: none;">View All Catalog →</a>
+      </div>
+
+      <div class="categories-grid" id="homeCategoriesGrid">
+        <a href="catalog.html?cat=combos" class="category-card" style="text-decoration: none;">
+          <div class="category-icon">🍱</div>
+          <div class="category-name">Kitchen Combos</div>
+          <span class="category-count">1-in-1 to 10-in-1</span>
+        </a>
+        <a href="catalog.html?cat=spices" class="category-card" style="text-decoration: none;">
+          <div class="category-icon">🌶️</div>
+          <div class="category-name">Spices & Masalas</div>
+          <span class="category-count">Stone Ground</span>
+        </a>
+        <a href="catalog.html?cat=podis" class="category-card" style="text-decoration: none;">
+          <div class="category-icon">🍚</div>
+          <div class="category-name">Traditional Podis</div>
+          <span class="category-count">Gunpowder & Dal</span>
+        </a>
+        <a href="catalog.html?cat=pickles" class="category-card" style="text-decoration: none;">
+          <div class="category-icon">🥭</div>
+          <div class="category-name">South Pickles</div>
+          <span class="category-count">Gingelly Oil Cured</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BESTSELLERS COMBOS ===================== -->
+  <section class="section"
+    style="background: #fff; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2>Bestselling Combos & Signature Packs</h2>
+          <p>Our customers' most loved spice powders and combo sets delivered fresh across India</p>
+        </div>
+        <a href="catalog.html?cat=combos" class="btn btn-secondary btn-sm" style="text-decoration: none;">All
+          Bestsellers →</a>
+      </div>
+
+      <div class="products-grid" id="featuredCombosGrid">
+        <!-- Dynamically populated via js/main.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FESTIVE PROMO BANNER ===================== -->
+  <section class="section">
+    <div class="container">
+      <div class="festive-promo-box">
+        <div>
+          <span class="badge badge-gold" style="margin-bottom: 12px;">Limited Festive Deal</span>
+          <h2 style="font-family: var(--font-serif); font-size: 32px; margin-bottom: 8px;">Flat 20% OFF on Master
+            10-in-1 Box</h2>
+          <p style="opacity: 0.95; font-size: 15px;">Use coupon code <strong
+              style="background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 4px;">FESTIVE20</strong> at
+            checkout.</p>
+        </div>
+        <a href="product.html?id=prod-5" class="btn btn-secondary btn-lg festive-promo-btn"
+          style="background: #fff; color: #c2410c; border: none; font-weight: 700; text-decoration: none;">
+          Claim Offer Now 🎁
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS SECTION ===================== -->
+  <section class="section" style="background: var(--bg-subtle);">
+    <div class="container">
+      <div class="section-header" style="justify-content: center; text-align: center;">
+        <div class="section-title-wrap">
+          <h2>Why Families Trust Ilampirai Kitchens</h2>
+          <p>Over 10,000+ satisfied households enjoy the warmth of traditional homestyle cooking</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+        <div
+          style="background: #fff; padding: 28px; border-radius: var(--radius-md); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+          <div style="font-size: 24px; margin-bottom: 12px;">⭐⭐⭐⭐⭐</div>
+          <p style="font-style: italic; color: var(--text-muted); margin-bottom: 16px;">
+            "The aroma of the 3-in-1 Sambar and Idli podi brought back memories of my grandmother's kitchen in Madurai.
+            Absolutely pure and no artificial colors!"
+          </p>
+          <strong>— Meenakshi S., Bangalore</strong>
+        </div>
+
+        <div
+          style="background: #fff; padding: 28px; border-radius: var(--radius-md); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+          <div style="font-size: 24px; margin-bottom: 12px;">⭐⭐⭐⭐⭐</div>
+          <p style="font-style: italic; color: var(--text-muted); margin-bottom: 16px;">
+            "We ordered the 10-in-1 Master Combo Box for Diwali. The packaging was immaculate, and the gingelly oil
+            mango pickle was extraordinary!"
+          </p>
+          <strong>— Rajesh V., Chennai</strong>
+        </div>
+
+        <div
+          style="background: #fff; padding: 28px; border-radius: var(--radius-md); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm);">
+          <div style="font-size: 24px; margin-bottom: 12px;">⭐⭐⭐⭐⭐</div>
+          <p style="font-style: italic; color: var(--text-muted); margin-bottom: 16px;">
+            "Prompt delivery and genuine stone-ground texture. It makes everyday meal prep so effortless yet rich in
+            traditional flavor."
+          </p>
+          <strong>— Geetha K., Hyderabad</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TOAST NOTIFICATION CONTAINER ===================== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ===================== SITE FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Ilampirai Kitchens 🍱</h3>
+          <p>
+            Preserving authentic South Indian culinary wisdom. Pure, stone-ground, preservative-free traditional spices
+            and specialty multi-combo boxes delivered directly to your doorstep.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore Categories</h4>
+          <ul class="footer-links">
+            <li><a href="catalog.html?cat=combos">Combo Boxes (1-10)</a></li>
+            <li><a href="catalog.html?cat=spices">Sambar & Rasam Blends</a></li>
+            <li><a href="catalog.html?cat=podis">Gunpowder Idli Podi</a></li>
+            <li><a href="catalog.html?cat=pickles">Wood-Pressed Pickles</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="catalog.html">Full Catalog</a></li>
+            <li><a href="cart.html">View Cart</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="track-order.html" style="color: #fbbf24; font-weight: 600;">Track Order</a></li>
+            <li><a href="retrunpolicy.html">Return policy</a></li>
+            <li><a href="shippingpolicy.html">Shipping Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Stay Connected</h4>
+          <p style="color: #9eb5a7; margin-bottom: 12px; font-size: 13px;">Get recipes and festival offers directly in
+            your inbox:</p>
+          <div style="display: flex; gap: 6px;">
+            <input type="email" placeholder="Enter email"
+              style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334; background: #1c2c22; color: #fff; font-size: 13px; width: 100%;">
+            <button class="btn btn-primary btn-sm"
+              onclick="alert('Thank you for subscribing to Ilampirai Kitchens!');">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Ilampirai Kitchens. All rights reserved.</span>
+        <span>Secure Payments &middot; Fast Delivery &middot; 100% Satisfaction</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
