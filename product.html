@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details — Ilampirai Kitchens</title>
+  <meta name="description"
+    content="Experience stone-ground authentic South Indian masalas, sambar podi, and handcrafted multi-combo packs from Ilampirai Kitchens.">
+  <link rel="stylesheet" href="css/style.css?v=20">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🍱</text></svg>">
+</head>
+
+<body>
+
+  <!-- ===================== ANNOUNCEMENT TOP BAR ===================== -->
+  <div class="top-announcement">
+    <span>🎉 Festive Offer: Use code <strong>ILAMPIRAI10</strong> for 10% OFF! Free shipping across India on orders
+      above ₹499!</span>
+  </div>
+
+  <!-- ===================== NAVIGATION HEADER ===================== -->
+  <header class="site-navbar">
+    <div class="container nav-container">
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu(true)"
+        aria-label="Open Navigation Menu">☰</button>
+
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">🍱</div>
+        <div class="brand-text">
+          <h1>Ilampirai Kitchens</h1>
+          <span>Tradition &middot; Purity &middot; Taste</span>
+        </div>
+      </a>
+
+      <!-- Live Search -->
+      <div class="nav-search">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="navSearchInput" placeholder="Search Sambar Podi, Combos, Pickles...">
+        </div>
+      </div>
+
+      <!-- Nav Links -->
+      <nav class="main-nav-bar">
+        <ul class="nav-links" id="mainHeaderNavLinks">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="catalog.html" class="nav-link">All Products</a></li>
+        </ul>
+      </nav>
+
+      <!-- Nav Actions -->
+      <div class="nav-actions">
+        <a href="catalog.html" class="action-btn nav-wishlist-btn" title="Wishlist" style="text-decoration: none;">
+          <span>❤️</span>
+          <span class="badge-count" id="navWishlistCount">0</span>
+        </a>
+
+        <a href="cart.html" class="action-btn" title="Shopping Cart" style="text-decoration: none;">
+          <span>🛒</span>
+          <span class="badge-count" id="navCartCount">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Side Drawer Navigation -->
+  <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu(false)"></div>
+  <aside id="mobileMenuDrawer" class="mobile-menu-drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand-logo" style="gap: 10px;">
+        <div class="brand-icon" style="width: 36px; height: 36px; font-size: 20px;">🍱</div>
+        <div class="brand-text">
+          <h2 style="font-size: 17px; color: var(--primary-hover); margin: 0; line-height: 1.1;">Ilampirai Kitchens</h2>
+          <span style="font-size: 9px; color: var(--accent-orange); font-weight: 700; letter-spacing: 1px;">TRADITION
+            &middot; PURITY</span>
+        </div>
+      </div>
+      <button class="mobile-drawer-close" onclick="toggleMobileMenu(false)" aria-label="Close Navigation">✕</button>
+    </div>
+
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-section-title">Navigation</div>
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="index.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">🏠</span> <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="catalog.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">🛍️</span> <span>All Products</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="mobile-drawer-section-title">Explore Categories</div>
+      <ul class="mobile-nav-list" id="mobileCategoriesList">
+        <!-- Dynamically rendered via JS -->
+      </ul>
+
+      <div class="mobile-drawer-section-title">Quick Actions</div>
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="cart.html" class="mobile-nav-item">
+            <span class="m-icon">🛒</span> <span>Shopping Cart</span>
+            <span class="badge badge-orange" id="mobileDrawerCartBadge" style="margin-left: auto;">0</span>
+          </a>
+        </li>
+        <li>
+          <a href="track-order.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">🚚</span> <span>Track Order</span>
+          </a>
+        </li>
+        <li>
+          <a href="catalog.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">❤️</span> <span>Saved Wishlist</span>
+            <span class="badge badge-gold" id="mobileDrawerWishlistBadge" style="margin-left: auto;">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN PRODUCT DETAIL CONTAINER ===================== -->
+  <main style="padding: 40px 0 20px;">
+    <div class="container" id="productDetailContent">
+      <div style="text-align: center; padding: 60px 0;">
+        <div style="font-size: 40px; margin-bottom: 12px;">⏳</div>
+        <p style="color: var(--text-muted);">Loading authentic kitchen recipe...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================== RELATED PRODUCTS ===================== -->
+  <section class="section" style="background: #fff; border-top: 1px solid var(--border-light); padding: 50px 0;">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-title-wrap">
+          <h2>You May Also Love</h2>
+          <p>Pair with traditional daily accompaniments and stone-ground spices</p>
+        </div>
+        <a href="catalog.html" class="btn btn-secondary btn-sm" style="text-decoration: none;">Browse Full Catalog →</a>
+      </div>
+
+      <div class="products-grid" id="relatedProductsGrid">
+        <!-- Rendered by js/product.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TOAST NOTIFICATION CONTAINER ===================== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ===================== SITE FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Ilampirai Kitchens 🍱</h3>
+          <p>
+            Preserving authentic South Indian culinary wisdom. Pure, stone-ground, preservative-free traditional spices
+            and specialty multi-combo boxes delivered directly to your doorstep.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore Categories</h4>
+          <ul class="footer-links">
+            <li><a href="catalog.html?cat=combos">Combo Boxes (1-10)</a></li>
+            <li><a href="catalog.html?cat=spices">Sambar & Rasam Blends</a></li>
+            <li><a href="catalog.html?cat=podis">Gunpowder Idli Podi</a></li>
+            <li><a href="catalog.html?cat=pickles">Wood-Pressed Pickles</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="cart.html">View Cart</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="track-order.html" style="color: #fbbf24; font-weight: 600;">Track Order</a></li>
+            <li><a href="retrunpolicy.html">Return policy</a></li>
+            <li><a href="shippingpolicy.html">Shipping Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Stay Connected</h4>
+          <p style="color: #9eb5a7; margin-bottom: 12px; font-size: 13px;">Get recipes and festival offers directly in
+            your inbox:</p>
+          <div style="display: flex; gap: 6px;">
+            <input type="email" placeholder="Enter email"
+              style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334; background: #1c2c22; color: #fff; font-size: 13px; width: 100%;">
+            <button class="btn btn-primary btn-sm"
+              onclick="alert('Thank you for subscribing to Ilampirai Kitchens!');">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Ilampirai Kitchens. All rights reserved.</span>
+        <span>Secure Payments &middot; Fast Delivery &middot; 100% Satisfaction</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js?v=20"></script>
+  <script src="js/product.js?v=20"></script>
+</body>
+
+</html>

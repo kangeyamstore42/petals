@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Checkout & Payment — Ilampirai Kitchens</title>
+  <meta name="description"
+    content="Complete your order for authentic stone-ground South Indian masalas and festival combos with secure payments and state-based delivery zones.">
+  <link rel="stylesheet" href="css/style.css?v=14">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🍱</text></svg>">
+</head>
+
+<body>
+
+  <!-- ===================== ANNOUNCEMENT TOP BAR ===================== -->
+  <div class="top-announcement">
+    <span>🎉 Festive Offer: Use code <strong>ILAMPIRAI10</strong> for 10% OFF! Free shipping across India on orders
+      above ₹499!</span>
+  </div>
+
+  <!-- ===================== NAVIGATION HEADER ===================== -->
+  <header class="site-navbar">
+    <div class="container nav-container">
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu(true)"
+        aria-label="Open Navigation Menu">☰</button>
+
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon">🍱</div>
+        <div class="brand-text">
+          <h1>Ilampirai Kitchens</h1>
+          <span>Tradition &middot; Purity &middot; Taste</span>
+        </div>
+      </a>
+
+      <!-- Live Search -->
+      <div class="nav-search">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="navSearchInput" placeholder="Search Sambar Podi, Combos, Pickles...">
+        </div>
+      </div>
+
+      <!-- Nav Links -->
+      <nav class="main-nav-bar">
+        <ul class="nav-links" id="mainHeaderNavLinks">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="catalog.html" class="nav-link">All Products</a></li>
+        </ul>
+      </nav>
+
+      <!-- Nav Actions -->
+      <div class="nav-actions">
+        <a href="catalog.html" class="action-btn nav-wishlist-btn" title="Wishlist" style="text-decoration: none;">
+          <span>❤️</span>
+          <span class="badge-count" id="navWishlistCount">0</span>
+        </a>
+
+        <a href="cart.html" class="action-btn" title="Shopping Cart" style="text-decoration: none;">
+          <span>🛒</span>
+          <span class="badge-count" id="navCartCount">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Side Drawer Navigation -->
+  <div id="mobileMenuOverlay" class="mobile-menu-overlay" onclick="toggleMobileMenu(false)"></div>
+  <aside id="mobileMenuDrawer" class="mobile-menu-drawer">
+    <div class="mobile-drawer-header">
+      <div class="brand-logo" style="gap: 10px;">
+        <div class="brand-icon" style="width: 36px; height: 36px; font-size: 20px;">🍱</div>
+        <div class="brand-text">
+          <h2 style="font-size: 17px; color: var(--primary-hover); margin: 0; line-height: 1.1;">Ilampirai Kitchens</h2>
+          <span style="font-size: 9px; color: var(--accent-orange); font-weight: 700; letter-spacing: 1px;">TRADITION
+            &middot; PURITY</span>
+        </div>
+      </div>
+      <button class="mobile-drawer-close" onclick="toggleMobileMenu(false)" aria-label="Close Navigation">✕</button>
+    </div>
+
+    <div class="mobile-drawer-content">
+      <div class="mobile-drawer-section-title">Navigation</div>
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="index.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">🏠</span> <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="catalog.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">🛍️</span> <span>All Products</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="mobile-drawer-section-title">Explore Categories</div>
+      <ul class="mobile-nav-list" id="mobileCategoriesList">
+        <!-- Dynamically rendered via JS -->
+      </ul>
+
+      <div class="mobile-drawer-section-title">Quick Actions</div>
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="cart.html" class="mobile-nav-item">
+            <span class="m-icon">🛒</span> <span>Shopping Cart</span>
+            <span class="badge badge-orange" id="mobileDrawerCartBadge" style="margin-left: auto;">0</span>
+          </a>
+        </li>
+        <li>
+          <a href="track-order.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">🚚</span> <span>Track Order</span>
+          </a>
+        </li>
+        <li>
+          <a href="catalog.html" class="mobile-nav-item" onclick="toggleMobileMenu(false);">
+            <span class="m-icon">❤️</span> <span>Saved Wishlist</span>
+            <span class="badge badge-gold" id="mobileDrawerWishlistBadge" style="margin-left: auto;">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN CHECKOUT CONTENT ===================== -->
+  <main style="padding: 40px 0 60px;">
+    <div class="container">
+      <h2 style="font-family: var(--font-serif); font-size: 30px; margin-bottom: 24px;">Secure Checkout & Payment</h2>
+
+      <div class="checkout-layout">
+        <!-- Left: Forms -->
+        <div>
+          <form id="checkoutForm">
+            <!-- Step 1: Customer & Delivery Address -->
+            <div class="checkout-step-card">
+              <div class="checkout-step-title">
+                <span class="step-num">1</span>
+                <span>Delivery & Shipping Address</span>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="custName">Full Name *</label>
+                  <input type="text" id="custName" class="form-control" placeholder="e.g. S. Meenakshi" required
+                    value="">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="custPhone">Mobile Number (for delivery SMS) *</label>
+                  <input type="tel" id="custPhone" class="form-control" placeholder="+91 98400 12345" required value="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="custEmail">Email Address (for invoice)</label>
+                <input type="email" id="custEmail" class="form-control" placeholder="meenakshi@example.com" value="">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="custAddress">Street Address / House No / Landmark *</label>
+                <input type="text" id="custAddress" class="form-control"
+                  placeholder="Flat 4B, Emerald Heights, T. Nagar" required value="">
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="custCity">City *</label>
+                  <input type="text" id="custCity" class="form-control" required value="">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="custState">State / Union Territory *</label>
+                  <select id="custState" class="form-control" onchange="onCheckoutStateChange()" required>
+                    <!-- Dynamically populated from Admin-configured Active shipping zones only -->
+                    <option value="">-- Loading delivery zones... --</option>
+                  </select>
+                  <small id="custStateHint"
+                    style="color: var(--text-muted, #64748b); font-size: 12px; margin-top: 4px; display: block;"></small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="custPincode">PIN Code *</label>
+                <input type="text" id="custPincode" class="form-control" placeholder="600017" required value="">
+              </div>
+            </div>
+
+            <!-- Step 2: Payment Method -->
+            <div class="checkout-step-card">
+              <div class="checkout-step-title">
+                <span class="step-num">2</span>
+                <span>Select Payment Method</span>
+              </div>
+
+              <div class="payment-methods">
+                <div class="payment-tab active" data-method="upi">
+                  <div class="payment-tab-icon">📲</div>
+                  <div class="payment-tab-title">Instant UPI / QR</div>
+                </div>
+
+                <div class="payment-tab" data-method="card">
+                  <div class="payment-tab-icon">💳</div>
+                  <div class="payment-tab-title">Cards (Visa/MC)</div>
+                </div>
+
+                <div class="payment-tab" data-method="netbanking">
+                  <div class="payment-tab-icon">🏦</div>
+                  <div class="payment-tab-title">Net Banking</div>
+                </div>
+
+                <div class="payment-tab" data-method="cod">
+                  <div class="payment-tab-icon">💵</div>
+                  <div class="payment-tab-title">Cash on Delivery</div>
+                </div>
+              </div>
+
+              <!-- UPI Pane -->
+              <div class="payment-content-pane payment-pane" id="pane-upi">
+                <div class="upi-qr-box">
+                  <p style="font-size: 14px; font-weight: 600;">Scan QR code with GPay, PhonePe, Paytm, or BHIM</p>
+                  <div class="upi-qr-code">
+                    <svg viewBox="0 0 100 100" width="140" height="140">
+                      <rect width="100" height="100" fill="#ffffff" />
+                      <rect x="10" y="10" width="25" height="25" fill="#15803d" />
+                      <rect x="15" y="15" width="15" height="15" fill="#ffffff" />
+                      <rect x="18" y="18" width="9" height="9" fill="#15803d" />
+                      <rect x="65" y="10" width="25" height="25" fill="#15803d" />
+                      <rect x="70" y="15" width="15" height="15" fill="#ffffff" />
+                      <rect x="73" y="18" width="9" height="9" fill="#15803d" />
+                      <rect x="10" y="65" width="25" height="25" fill="#15803d" />
+                      <rect x="15" y="70" width="15" height="15" fill="#ffffff" />
+                      <rect x="18" y="73" width="9" height="9" fill="#15803d" />
+                      <rect x="45" y="15" width="10" height="20" fill="#1e293b" />
+                      <rect x="45" y="45" width="20" height="10" fill="#1e293b" />
+                      <rect x="40" y="65" width="15" height="15" fill="#1e293b" />
+                      <rect x="65" y="45" width="20" height="20" fill="#1e293b" />
+                      <rect x="75" y="75" width="15" height="15" fill="#1e293b" />
+                    </svg>
+                  </div>
+                  <div class="upi-id-badge">UPI ID: ilampiraikitchens@okaxis</div>
+                  <small style="color: var(--text-light);">Clicking Place Order simulates instant bank UPI
+                    confirmation</small>
+                </div>
+              </div>
+
+              <!-- Card Pane -->
+              <div class="payment-content-pane payment-pane" id="pane-card" style="display: none;">
+                <div class="form-group">
+                  <label class="form-label">Card Number</label>
+                  <input type="text" class="form-control" placeholder="4532 •••• •••• 8891" value="4532 8912 3456 7890">
+                </div>
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label">Expiry (MM/YY)</label>
+                    <input type="text" class="form-control" placeholder="12/28" value="08/28">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">CVV</label>
+                    <input type="password" class="form-control" placeholder="•••" value="789" maxlength="4">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Netbanking Pane -->
+              <div class="payment-content-pane payment-pane" id="pane-netbanking" style="display: none;">
+                <div class="form-group">
+                  <label class="form-label">Choose Bank</label>
+                  <select class="form-control">
+                    <option>HDFC Bank</option>
+                    <option>State Bank of India (SBI)</option>
+                    <option>ICICI Bank</option>
+                    <option>Axis Bank</option>
+                    <option>Kotak Mahindra Bank</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- COD Pane -->
+              <div class="payment-content-pane payment-pane" id="pane-cod" style="display: none;">
+                <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+                  💵 Pay with cash upon delivery at your doorstep. Please keep exact change ready.
+                </p>
+              </div>
+
+              <button type="submit" id="placeOrderBtn" class="btn btn-primary btn-block btn-lg"
+                style="margin-top: 24px;">
+                Place Order & Pay
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Right: Checkout Summary Card -->
+        <div>
+          <div class="cart-summary-card">
+            <h3 class="summary-title">Order Summary</h3>
+            <div id="checkoutSummaryItems" style="margin-bottom: 16px;">
+              <!-- Rendered via js/checkout.js -->
+            </div>
+
+            <!-- Shipping Zone & Destination Info Banner -->
+            <div id="checkoutShippingZoneBanner"
+              style="background: var(--bg-surface-alt, #f8fafc); border: 1px solid var(--border-light); border-radius: 8px; padding: 12px; margin-bottom: 16px; font-size: 13px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <span style="font-weight: 700; color: var(--primary);">📍 Shipping Zone:</span>
+                <span id="checkoutZoneNameBadge" class="badge badge-info" style="font-size: 11px;">Tamil Nadu</span>
+              </div>
+              <div style="color: var(--text-muted); font-size: 12px; display: flex; justify-content: space-between;">
+                <span>Est. Delivery: <strong id="checkoutZoneDays">1 - 3 Days</strong></span>
+                <span>Carrier: <strong id="checkoutZoneCarrier">Delhivery / India Post</strong></span>
+              </div>
+            </div>
+
+            <!-- Coupon Selector / Input in Checkout -->
+            <div class="checkout-coupon-section"
+              style="margin-bottom: 16px; padding: 14px; background: #fff; border: 1.5px dashed var(--primary-glow, #15803d40); border-radius: 8px;">
+              <label
+                style="display: block; font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">
+                🏷️ Apply Coupon Code
+              </label>
+
+              <!-- Quick Select Available Coupons Dropdown -->
+              <div style="margin-bottom: 8px;">
+                <select id="checkoutCouponSelect" class="form-control" style="font-size: 13px; padding: 8px 10px;"
+                  onchange="onSelectCheckoutCouponDropdown(this.value)">
+                  <option value="">-- Choose from Available Coupons --</option>
+                  <!-- Populated via JS -->
+                </select>
+              </div>
+
+              <div class="coupon-box" style="margin-bottom: 0;">
+                <input type="text" id="checkoutCouponInput" class="coupon-input"
+                  placeholder="enter coupon code (e.g. ILAMPIRAI10)" style="text-transform: uppercase;">
+                <button type="button" class="btn btn-secondary btn-sm"
+                  onclick="applyCheckoutCouponCode()">Apply</button>
+              </div>
+
+              <div id="checkoutAppliedCouponTag"
+                style="display: none; margin-top: 8px; font-size: 12px; color: var(--primary); font-weight: 600; display: flex; justify-content: space-between; align-items: center;">
+                <span>Applied: <strong id="checkoutAppliedCouponName"></strong> (<span
+                    id="checkoutAppliedCouponDesc"></span>)</span>
+                <button type="button" onclick="removeCheckoutCoupon()"
+                  style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 12px; text-decoration: underline;">Remove</button>
+              </div>
+            </div>
+
+            <!-- Financial Calculation Rows (NO GST) -->
+            <div class="summary-row">
+              <span>Product Subtotal</span>
+              <strong id="checkoutSubtotal">₹0</strong>
+            </div>
+
+            <div class="summary-row">
+              <span id="checkoutDeliveryLabel">Shipping Charge</span>
+              <span id="checkoutDelivery">₹40</span>
+            </div>
+
+            <div class="summary-row" id="checkoutDiscountRow" style="display: none;">
+              <span>Coupon Discount</span>
+              <span id="checkoutDiscount" style="color: var(--primary); font-weight: 700;">-₹0</span>
+            </div>
+
+            <div class="summary-row total"
+              style="margin-top: 12px; padding-top: 12px; border-top: 2px solid var(--border-light);">
+              <span style="font-size: 16px;">Estimated Total</span>
+              <span id="checkoutGrandTotal" style="font-size: 20px; color: var(--primary); font-weight: 800;">₹0</span>
+            </div>
+
+            <div
+              style="margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--border-light); font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+              ✅ All spices freshly packed in sealed food-grade pouches.<br>
+              🚚 Track your parcel directly via SMS and WhatsApp updates.<br>
+              🔒 100% Secure Checkout & Instant Dispatch
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================== ORDER CONFIRMATION MODAL ===================== -->
+  <div id="orderSuccessModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="order-success-icon">✓</div>
+      <h2 class="order-success-title">Order Successfully Placed!</h2>
+      <p class="order-success-sub">Thank you for supporting Ilampirai Kitchens traditional culinary heritage.</p>
+
+      <div class="tracking-stepper">
+        <div class="track-step done">
+          <div class="track-dot">1</div>
+          <div class="track-label">Placed</div>
+        </div>
+        <div class="track-step active">
+          <div class="track-dot">2</div>
+          <div class="track-label">Packing</div>
+        </div>
+        <div class="track-step">
+          <div class="track-dot">3</div>
+          <div class="track-label">Dispatched</div>
+        </div>
+        <div class="track-step">
+          <div class="track-dot">4</div>
+          <div class="track-label">Delivered</div>
+        </div>
+      </div>
+
+      <div class="receipt-summary-box" id="orderSuccessDetails">
+        <!-- Injected via js/checkout.js -->
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-top: 20px;">
+        <button class="btn btn-secondary btn-block" onclick="window.print()">🖨️ Print Invoice</button>
+        <button class="btn btn-primary btn-block" onclick="closeOrderModal()">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TOAST NOTIFICATION CONTAINER ===================== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- ===================== SITE FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Ilampirai Kitchens 🍱</h3>
+          <p>
+            Preserving authentic South Indian culinary wisdom. Pure, stone-ground, preservative-free traditional spices
+            and specialty multi-combo boxes delivered directly to your doorstep.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore Categories</h4>
+          <ul class="footer-links">
+            <li><a href="catalog.html?cat=combos">Combo Boxes (1-10)</a></li>
+            <li><a href="catalog.html?cat=spices">Sambar & Rasam Blends</a></li>
+            <li><a href="catalog.html?cat=podis">Gunpowder Idli Podi</a></li>
+            <li><a href="catalog.html?cat=pickles">Wood-Pressed Pickles</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="cart.html">View Cart</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="track-order.html" style="color: #fbbf24; font-weight: 600;">Track Order</a></li>
+            <li><a href="retrunpolicy.html">Return policy</a></li>
+            <li><a href="shippingpolicy.html">Shipping Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Stay Connected</h4>
+          <p style="color: #9eb5a7; margin-bottom: 12px; font-size: 13px;">Get recipes and festival offers directly in
+            your inbox:</p>
+          <div style="display: flex; gap: 6px;">
+            <input type="email" placeholder="Enter email"
+              style="padding: 8px 12px; border-radius: 6px; border: 1px solid #334; background: #1c2c22; color: #fff; font-size: 13px; width: 100%;">
+            <button class="btn btn-primary btn-sm"
+              onclick="alert('Thank you for subscribing to Ilampirai Kitchens!');">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 Ilampirai Kitchens. All rights reserved.</span>
+        <span>Secure Payments &middot; Fast Delivery &middot; 100% Satisfaction</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+
+</html>

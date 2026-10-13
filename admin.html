@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Ilampirai Kitchens</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2224%22>📦</text></svg>">
+</head>
+
+<body class="admin-body">
+
+  <!-- ==========================================================================
+       ADMIN AUTHENTICATION LOGIN SCREEN
+       ========================================================================== -->
+  <div id="adminLoginScreen" class="admin-login-overlay" style="display: none;">
+    <div class="admin-login-card">
+      <div class="admin-login-header">
+        <div class="login-brand-icon">🍱</div>
+        <h2>Ilampirai Kitchens</h2>
+        <span class="brand-badge" style="margin-top: 6px;">MERCHANT ADMIN HUB</span>
+        <p style="color: var(--admin-muted); font-size: 13px; margin-top: 8px;">Please enter administrator credentials to manage your store catalog, orders & settings</p>
+      </div>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div id="loginErrorMessage" class="login-error-alert" style="display: none;"></div>
+
+        <div class="form-field" style="margin-bottom: 16px;">
+          <label>Admin Email / Username *</label>
+          <input type="text" id="adminLoginUser" value="admin@ilampirai.com" placeholder="admin@ilampirai.com" required>
+        </div>
+
+        <div class="form-field" style="margin-bottom: 20px;">
+          <label>Password *</label>
+          <input type="password" id="adminLoginPass" value="admin123" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn-admin btn-admin-primary" style="width: 100%; justify-content: center; padding: 12px; font-size: 15px;">
+          🔐 Sign In to Admin Dashboard
+        </button>
+
+        <div class="login-credentials-hint">
+          <span>Demo Admin Access:</span><br>
+          Username: <strong>admin@ilampirai.com</strong> &middot; Password: <strong>admin123</strong>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Admin App Shell (Hidden when logged out) -->
+  <div id="adminAppShell" style="display: none; width: 100%; min-height: 100vh;">
+
+  <!-- ==========================================================================
+       SIDEBAR NAVIGATION (Matches User Screenshot Exact Items & Layout)
+       ========================================================================== -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <div class="brand-title">
+        <span>🍱 Ilampirai</span>
+        <span class="brand-badge">ADMIN</span>
+      </div>
+      <div style="font-size: 12px; color: var(--admin-muted); margin-top: 4px;">Kitchens Business Hub</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <!-- 1. Orders (Default active matching screenshot) -->
+      <a class="sidebar-item active" data-tab="orders">
+        <span class="item-icon">📦</span>
+        <span>Orders</span>
+      </a>
+
+      <!-- 2. Products -->
+      <a class="sidebar-item" data-tab="products">
+        <span class="item-icon">🛍️</span>
+        <span>Products</span>
+      </a>
+
+      <!-- 3. Categories (Parent Taxonomies) -->
+      <a class="sidebar-item" data-tab="categories">
+        <span class="item-icon">📂</span>
+        <span>Categories</span>
+      </a>
+
+      <!-- 4. Subcategories -->
+      <a class="sidebar-item" data-tab="subcategories">
+        <span class="item-icon">📑</span>
+        <span>Subcategories</span>
+      </a>
+
+      <!-- 5. Users -->
+      <a class="sidebar-item" data-tab="users">
+        <span class="item-icon">👥</span>
+        <span>Users</span>
+      </a>
+
+      <!-- 5. Shipping -->
+      <a class="sidebar-item" data-tab="shipping">
+        <span class="item-icon">🚚</span>
+        <span>Shipping</span>
+      </a>
+
+      <!-- 6. Coupons -->
+      <a class="sidebar-item" data-tab="coupons">
+        <span class="item-icon">🏷️</span>
+        <span>Coupons</span>
+      </a>
+
+      <!-- 7. Blogs -->
+      <a class="sidebar-item" data-tab="blogs">
+        <span class="item-icon">📄</span>
+        <span>Blogs</span>
+      </a>
+
+      <!-- 7. Inventory Alerts -->
+      <a class="sidebar-item" data-tab="inventory">
+        <span class="item-icon">⚠️</span>
+        <span>Inventory Alerts</span>
+      </a>
+
+      <!-- 8. Best Sellers & Stock -->
+      <a class="sidebar-item" data-tab="bestsellers">
+        <span class="item-icon">🔥</span>
+        <span>Best Sellers & Stock</span>
+      </a>
+
+      <!-- Logout -->
+      <a href="#" class="sidebar-item logout-item" onclick="handleAdminLogout(event)" title="Sign out of Admin Dashboard">
+        <span class="item-icon">↪️</span>
+        <span>Logout</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ==========================================================================
+       MAIN ADMIN CONTENT
+       ========================================================================== -->
+  <main class="admin-main">
+    <!-- Top Bar -->
+    <header class="admin-topbar">
+      <div class="admin-title-wrap">
+        <h1 id="adminPageTitle">Orders Management</h1>
+        <p>Live merchant management portal for Ilampirai Kitchens</p>
+      </div>
+
+      <div class="topbar-actions">
+        <a href="index.html" class="btn-admin btn-admin-outline">🛒 View Customer Store</a>
+        <button class="btn-admin btn-admin-primary" onclick="exportOrdersCSV()">⬇️ Export CSV</button>
+      </div>
+    </header>
+
+    <!-- Stat Highlights -->
+    <section class="admin-stats-grid">
+      <div class="admin-stat-card">
+        <div class="stat-header">
+          <span class="stat-label">Total Revenue</span>
+          <span class="stat-icon" style="background: #ecfdf5; color: #10b981;">💰</span>
+        </div>
+        <div class="stat-value" id="adminTotalSales">₹0</div>
+        <div class="stat-sub">From online customer orders</div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="stat-header">
+          <span class="stat-label">Total Orders</span>
+          <span class="stat-icon" style="background: #eff6ff; color: #3b82f6;">📦</span>
+        </div>
+        <div class="stat-value" id="adminTotalOrders">0</div>
+        <div class="stat-sub">Across all regions</div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="stat-header">
+          <span class="stat-label">Active Products</span>
+          <span class="stat-icon" style="background: #fffbeb; color: #f59e0b;">🛍️</span>
+        </div>
+        <div class="stat-value" id="adminTotalProducts">0</div>
+        <div class="stat-sub">Combos, spices & podis</div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="stat-header">
+          <span class="stat-label">Stock Alerts</span>
+          <span class="stat-icon" style="background: #fef2f2; color: #ef4444;">⚠️</span>
+        </div>
+        <div class="stat-value" id="adminTotalAlerts" style="color: #ef4444;">0</div>
+        <div class="stat-sub">Products below 20 units</div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 1: ORDERS ===================== -->
+    <section id="tab-orders" class="admin-tab-content active">
+      <div class="admin-panel">
+        <div class="panel-header">
+          <h2>Customer Orders</h2>
+          <span style="font-size: 13px; color: var(--admin-muted);">Syncing live with backend</span>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Customer Details</th>
+                <th>Items & Pack Sizes</th>
+                <th>Amount</th>
+                <th>Fulfillment Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminOrdersTableBody">
+              <!-- Rendered via admin.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 2: PRODUCTS ===================== -->
+    <section id="tab-products" class="admin-tab-content">
+      <!-- Add Product Card -->
+      <!-- Add / Edit Product Card -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <h2 id="productFormTitle">➕ Add New Recipe / Combo Product</h2>
+          <span style="font-size: 13px; color: var(--admin-muted);">Attach product photos and configure custom pack
+            variants</span>
+        </div>
+        <form id="adminProductForm" onsubmit="handleAddProductForm(event)">
+          <input type="hidden" id="editingProductId" value="">
+
+          <div class="admin-form-grid">
+            <div class="form-field">
+              <label>Product Name *</label>
+              <input type="text" id="newProdName" placeholder="e.g. 4 in 1 Tiffin Podi Quartet" required>
+            </div>
+
+            <div class="form-field">
+              <label>Category *</label>
+              <select id="newProdCategory" onchange="syncSubcategoriesDropdownForProduct()">
+                <option value="">-- Select Category --</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label>Subcategory</label>
+              <select id="newProdSubcategory">
+                <option value="">-- Select Subcategory --</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label>Combo Type / Subtitle</label>
+              <input type="text" id="newProdComboType" placeholder="e.g. 4 in 1 / Grandma Special"
+                value="Special Combo">
+            </div>
+
+            <div class="form-field">
+              <label>Promotional Badge</label>
+              <input type="text" id="newProdBadge" placeholder="e.g. Bestseller / New / 20% OFF" value="Bestseller">
+            </div>
+
+            <div class="form-field">
+              <label>Icon Emoji (Fallback)</label>
+              <input type="text" id="newProdEmoji" placeholder="🍱 / 🌶️ / 🍚" value="🍱">
+            </div>
+
+            <div class="form-field">
+              <label>Total Available Stock (Units) *</label>
+              <input type="number" id="newProdStock" value="50" min="1" required>
+            </div>
+          </div>
+
+          <!-- Product Image Browser / Upload -->
+          <div class="form-field" style="margin-bottom: 20px;">
+            <label style="font-weight: 700;">📸 Product Image (Browse & Pick from Computer / Device)</label>
+            <div class="image-picker-box" id="newProdImageDropzone">
+              <input type="file" id="newProdImageFile" accept="image/*"
+                onchange="handleImageFileSelect(event, 'newProd')">
+              <div style="font-size: 32px;">🖼️</div>
+              <div style="font-weight: 600; font-size: 14px; color: var(--admin-blue);">
+                Click to browse and pick image from your computer
+              </div>
+              <div style="font-size: 12px; color: var(--admin-muted);">Supports PNG, JPG, JPEG, WEBP</div>
+            </div>
+
+            <div id="newProdImagePreviewWrapper" class="image-preview-wrapper" style="display: none;">
+              <img id="newProdImagePreview" class="image-preview-thumb" src="" alt="Preview">
+              <div>
+                <strong id="newProdImageName" style="font-size: 13px; display: block;">photo.png</strong>
+                <button type="button" class="btn-remove-img" onclick="removeSelectedImage('newProd')">✕ Remove
+                  Image</button>
+              </div>
+            </div>
+            <input type="hidden" id="newProdImageData" value="">
+          </div>
+
+          <!-- Dynamic Product Variants (Weights & Prices) -->
+          <div class="variants-builder-section">
+            <div class="variants-builder-header">
+              <div>
+                <strong style="font-size: 15px;">⚖️ Product Pack Variants & Pricing</strong>
+                <p style="font-size: 12px; color: var(--admin-muted);">Define pack sizes (50g, 100g, 200g, 500g, 1kg)
+                  with individual prices</p>
+              </div>
+
+              <!-- Quick Presets -->
+              <div class="variants-presets">
+                <span style="font-size: 12px; font-weight: 600; color: var(--admin-muted); align-self: center;">Quick
+                  Add:</span>
+                <button type="button" class="btn-preset" onclick="addVariantRow('newProd', '50g', 55, 70, 50)">+
+                  50g</button>
+                <button type="button" class="btn-preset" onclick="addVariantRow('newProd', '100g', 105, 130, 40)">+
+                  100g</button>
+                <button type="button" class="btn-preset" onclick="addVariantRow('newProd', '200g', 200, 250, 30)">+
+                  200g</button>
+                <button type="button" class="btn-preset" onclick="addVariantRow('newProd', '500g', 450, 550, 20)">+
+                  500g</button>
+                <button type="button" class="btn-preset" onclick="addVariantRow('newProd', '1kg', 850, 1050, 10)">+
+                  1kg</button>
+              </div>
+            </div>
+
+            <div
+              style="display: grid; grid-template-columns: 1.4fr 1.1fr 1.1fr 0.9fr 44px; gap: 12px; padding: 0 14px 6px; font-size: 12px; font-weight: 700; color: var(--admin-muted); text-transform: uppercase;">
+              <span>Variant / Pack Size</span>
+              <span>Selling Price (₹) *</span>
+              <span>MRP / Original (₹)</span>
+              <span>Stock Units</span>
+              <span></span>
+            </div>
+
+            <div id="newProdVariantsList" class="variants-list">
+              <!-- Rendered via JS -->
+            </div>
+
+            <button type="button" class="btn-admin btn-admin-outline" style="font-size: 13px;"
+              onclick="addVariantRow('newProd', 'Custom Pack', 120, 150, 25)">
+              ➕ Add Another Custom Variant
+            </button>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 20px;">
+            <label>Product Story & Description</label>
+            <textarea id="newProdDesc" rows="2"
+              placeholder="Heritage culinary story, stone-ground recipe, spices used..."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <button type="submit" id="saveProductSubmitBtn" class="btn-admin btn-admin-primary">
+              💾 Save Product to Catalog
+            </button>
+            <button type="button" id="cancelEditBtn" class="btn-admin btn-admin-outline" style="display: none;"
+              onclick="cancelProductEditMode()">
+              Cancel Edit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Existing Products Table -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <h2>Active Product Catalog</h2>
+          <span style="font-size: 13px; color: var(--admin-muted);">Click "✏️ Edit" to update pricing, variants or
+            image</span>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Image / Icon</th>
+                <th>Name & Classification</th>
+                <th>Pricing & Variants</th>
+                <th>Total Stock</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminProductsTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===================== TAB 3: USERS ===================== -->
+    <section id="tab-users" class="admin-tab-content">
+      <div class="admin-panel">
+        <div class="panel-header">
+          <h2>Customer Profiles</h2>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Customer Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>City</th>
+                <th>Orders Placed</th>
+                <th>Lifetime Spent</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB: CATEGORIES ===================== -->
+    <section id="tab-categories" class="admin-tab-content">
+      <!-- Add / Edit Category Form Card -->
+      <div class="admin-panel" id="categoryFormPanel">
+        <div class="panel-header">
+          <div>
+            <h2 id="categoryFormTitle">➕ Add New Category</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">Create or manage parent categories (Combos, Spices, Podis, Pickles, etc.)</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-outline" onclick="startNewCategoryMode()">
+            🔄 Reset Form
+          </button>
+        </div>
+
+        <form id="adminCategoryForm" onsubmit="handleCategorySubmit(event)">
+          <input type="hidden" id="editingCategoryId" value="">
+
+          <div class="admin-form-grid">
+            <div class="form-field">
+              <label>Category Name *</label>
+              <input type="text" id="catName" placeholder="e.g. Spices & Masalas / Healthy Snacks" required oninput="autoGenerateCategorySlug(this.value)">
+            </div>
+
+            <div class="form-field">
+              <label>Category Slug / Key *</label>
+              <input type="text" id="catSlug" placeholder="e.g. spices / combos / snacks" required>
+            </div>
+
+            <div class="form-field">
+              <label>Category Emoji / Icon</label>
+              <input type="text" id="catIcon" placeholder="🍱 / 🌶️ / 🍚 / 🥭 / 🥨" value="🍱">
+            </div>
+
+            <div class="form-field">
+              <label>Status</label>
+              <select id="catStatus">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 20px;">
+            <label>Category Culinary Description</label>
+            <textarea id="catDesc" rows="2" placeholder="Brief note on spice blend roast method, flavor profile, or regional specialty..."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <button type="submit" id="saveCatSubmitBtn" class="btn-admin btn-admin-primary">
+              💾 Save Category
+            </button>
+            <button type="button" id="cancelCatEditBtn" class="btn-admin btn-admin-outline" style="display: none;"
+              onclick="cancelCategoryEditMode()">
+              Cancel Edit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Active Categories Table Card -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Parent Categories Catalog</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">These categories are the parent options available when creating subcategories and products. Click "✏️ Edit" to update or "+ New Category" to add.</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-primary" onclick="startNewCategoryMode()">
+            ➕ New Category
+          </button>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 50px; text-align: center;">Icon</th>
+                <th>Category Name</th>
+                <th>Slug / Code</th>
+                <th>Status</th>
+                <th>Subcategories</th>
+                <th>Description</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="categoriesTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 4: SUBCATEGORIES ===================== -->
+    <section id="tab-subcategories" class="admin-tab-content">
+      <!-- Add / Edit Subcategory Form Card -->
+      <div class="admin-panel" id="subcategoryFormPanel">
+        <div class="panel-header">
+          <div>
+            <h2 id="subcategoryFormTitle">➕ Add New Subcategory</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">Create or update product taxonomies, parent category groupings and details</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-outline" onclick="startNewSubcategoryMode()">
+            🔄 Reset Form
+          </button>
+        </div>
+
+        <form id="adminSubcategoryForm" onsubmit="handleSubcategorySubmit(event)">
+          <input type="hidden" id="editingSubcategoryId" value="">
+
+          <div class="admin-form-grid">
+            <div class="form-field">
+              <label>Subcategory Name *</label>
+              <input type="text" id="subcatName" placeholder="e.g. Daily Sambar & Rasam Powders" required>
+            </div>
+
+            <div class="form-field">
+              <label>Parent Category *</label>
+              <select id="subcatParent" required>
+                <option value="">-- Select Parent Category --</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label>Category Emoji / Icon</label>
+              <input type="text" id="subcatIcon" placeholder="🍱 / 🌶️ / 🍲 / 🍚 / 🥭" value="🍱">
+            </div>
+
+            <div class="form-field">
+              <label>URL Slug / Code</label>
+              <input type="text" id="subcatSlug" placeholder="e.g. sambar-rasam-powders">
+            </div>
+
+            <div class="form-field">
+              <label>Taxonomy Status</label>
+              <select id="subcatStatus">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label>Estimated Items Count</label>
+              <input type="number" id="subcatItemCount" value="0" min="0">
+            </div>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 20px;">
+            <label>Subcategory Culinary Description</label>
+            <textarea id="subcatDesc" rows="2" placeholder="Brief note on spice blend roast method, flavor profile, or regional specialty..."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <button type="submit" id="saveSubcatSubmitBtn" class="btn-admin btn-admin-primary">
+              💾 Save Subcategory
+            </button>
+            <button type="button" id="cancelSubcatEditBtn" class="btn-admin btn-admin-outline" style="display: none;"
+              onclick="cancelSubcategoryEditMode()">
+              Cancel Edit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Active Subcategories Table Card -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Product Subcategories</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">Manage all active product subcategories. Click "✏️ Edit" to update or "+ New Subcategory" to add.</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-primary" onclick="startNewSubcategoryMode()">
+            ➕ New Subcategory
+          </button>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 50px; text-align: center;">Icon</th>
+                <th>Subcategory Name</th>
+                <th>Parent Category</th>
+                <th>Slug</th>
+                <th>Status</th>
+                <th>Item Count</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="subcategoriesTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 5: SHIPPING ===================== -->
+    <section id="tab-shipping" class="admin-tab-content">
+      <!-- Add / Edit Shipping Zone Form Card -->
+      <div class="admin-panel" id="shippingZoneFormPanel">
+        <div class="panel-header">
+          <div>
+            <h2 id="shippingFormTitle">➕ Add Shipping Zone</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">Configure custom state-based delivery charges across India for storefront checkout</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-primary" onclick="startNewShippingZoneMode()">
+            ➕ Add Shipping Zone
+          </button>
+        </div>
+
+        <form id="adminShippingForm" onsubmit="handleShippingFormSubmit(event)">
+          <input type="hidden" id="editingShippingZoneId" value="">
+
+          <div class="admin-form-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div class="form-field">
+              <label for="zoneStateSelect">State / Union Territory *</label>
+              <select id="zoneStateSelect" required>
+                <option value="">-- Select State / Union Territory --</option>
+                <optgroup label="Southern States & UTs">
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Puducherry">Puducherry</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Telangana">Telangana</option>
+                </optgroup>
+                <optgroup label="Western & Central States">
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
+                  <option value="Chhattisgarh">Chhattisgarh</option>
+                </optgroup>
+                <optgroup label="Northern States & UTs">
+                  <option value="Delhi">Delhi</option>
+                  <option value="Haryana">Haryana</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="Uttarakhand">Uttarakhand</option>
+                  <option value="Himachal Pradesh">Himachal Pradesh</option>
+                  <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                  <option value="Ladakh">Ladakh</option>
+                  <option value="Chandigarh">Chandigarh</option>
+                </optgroup>
+                <optgroup label="Eastern & North-Eastern States">
+                  <option value="West Bengal">West Bengal</option>
+                  <option value="Odisha">Odisha</option>
+                  <option value="Bihar">Bihar</option>
+                  <option value="Jharkhand">Jharkhand</option>
+                  <option value="Assam">Assam</option>
+                  <option value="Sikkim">Sikkim</option>
+                  <option value="Meghalaya">Meghalaya</option>
+                  <option value="Tripura">Tripura</option>
+                  <option value="Manipur">Manipur</option>
+                  <option value="Nagaland">Nagaland</option>
+                  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                  <option value="Mizoram">Mizoram</option>
+                </optgroup>
+                <optgroup label="Island Territories & Others">
+                  <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                  <option value="Lakshadweep">Lakshadweep</option>
+                  <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                </optgroup>
+                <optgroup label="Special Remote Regions">
+                  <option value="Special Remote & Hill Regions">Special Remote & Hill Regions</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="zoneShippingAmount">Shipping Amount (₹) *</label>
+              <input type="number" id="zoneShippingAmount" placeholder="e.g. 40" min="0" step="1" required>
+            </div>
+
+            <div class="form-field">
+              <label for="zoneStatus">Status</label>
+              <select id="zoneStatus">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center; margin-top: 18px;">
+            <button type="submit" id="saveShippingSubmitBtn" class="btn-admin btn-admin-primary">
+              💾 Save Shipping Zone
+            </button>
+            <button type="button" id="cancelShippingEditBtn" class="btn-admin btn-admin-outline" style="display: none;"
+              onclick="cancelShippingEditMode()">
+              Cancel Edit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Active Shipping Zones Table Card -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Configured State Shipping Zones</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">Active delivery rates matched during customer checkout. Prevented duplicate states.</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-primary" onclick="startNewShippingZoneMode()">
+            ➕ Add Shipping Zone
+          </button>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>State / Union Territory</th>
+                <th>Shipping Amount</th>
+                <th>Status</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="shippingZonesTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB: COUPONS MANAGEMENT ===================== -->
+    <section id="tab-coupons" class="admin-tab-content">
+      <!-- Add / Edit Coupon Form Card -->
+      <div class="admin-panel" id="couponFormPanel">
+        <div class="panel-header">
+          <div>
+            <h2 id="couponFormTitle">➕ Create New Promotional Coupon</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">Configure coupon code discounts, percentage or flat deductions, minimum cart spend, and customer eligibility rules</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-outline" onclick="startNewCouponMode()">
+            🔄 Reset Form
+          </button>
+        </div>
+
+        <form id="adminCouponForm" onsubmit="handleCouponFormSubmit(event)">
+          <input type="hidden" id="editingCouponId" value="">
+
+          <div class="admin-form-grid">
+            <div class="form-field">
+              <label>Coupon Code *</label>
+              <input type="text" id="couponCode" placeholder="e.g. DIWALI25" required style="text-transform: uppercase; font-weight: 700;">
+            </div>
+
+            <div class="form-field">
+              <label>Discount Type *</label>
+              <select id="couponDiscountType" onchange="onCouponTypeChange(this.value)">
+                <option value="percentage">Percentage Discount (%)</option>
+                <option value="flat">Flat Amount Discount (₹)</option>
+                <option value="free_shipping">Free Shipping</option>
+              </select>
+            </div>
+
+            <div class="form-field" id="couponValueGroup">
+              <label id="couponValueLabel">Discount Value (Percentage %) *</label>
+              <input type="number" id="couponDiscountValue" placeholder="e.g. 15" min="1" max="100" value="10">
+            </div>
+
+            <div class="form-field">
+              <label>Minimum Order Spend (₹) *</label>
+              <input type="number" id="couponMinSpend" placeholder="e.g. 499" min="0" value="299" required>
+            </div>
+
+            <div class="form-field">
+              <label>Status *</label>
+              <select id="couponStatus">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label>Promo Description *</label>
+              <input type="text" id="couponDesc" placeholder="e.g. 10% OFF on all authentic heritage spice mixes" required>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center; margin-top: 14px;">
+            <button type="submit" id="saveCouponSubmitBtn" class="btn-admin btn-admin-primary">
+              💾 Save Coupon Code
+            </button>
+            <button type="button" id="cancelCouponEditBtn" class="btn-admin btn-admin-outline" style="display: none;"
+              onclick="cancelCouponEditMode()">
+              Cancel Edit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Active Coupons Table Card -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Active Promotional Coupons & Discount Offers</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">Manage coupon codes applicable by customers on the storefront checkout page.</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-primary" onclick="startNewCouponMode()">
+            ➕ New Coupon
+          </button>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Coupon Code</th>
+                <th>Discount Details</th>
+                <th>Min Spend</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="couponsTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 6: BLOGS ===================== -->
+    <section id="tab-blogs" class="admin-tab-content">
+      <!-- Add / Edit Recipe Blog Card -->
+      <div class="admin-panel" id="blogFormPanel">
+        <div class="panel-header">
+          <div>
+            <h2 id="blogFormTitle">➕ Write Kitchen Recipe / Article</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">Share heritage South Indian cooking secrets, spice blend roast guides and culinary tips</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-outline" onclick="startNewBlogMode()">
+            🔄 Reset Form
+          </button>
+        </div>
+
+        <form id="adminBlogForm" onsubmit="handleBlogFormSubmit(event)">
+          <input type="hidden" id="editingBlogId" value="">
+
+          <div class="admin-form-grid">
+            <div class="form-field">
+              <label>Article / Recipe Title *</label>
+              <input type="text" id="blogPostTitle" placeholder="e.g. The Secret to Golden Sambar: 18 Roasted Spices" required>
+            </div>
+
+            <div class="form-field">
+              <label>Author / Chef *</label>
+              <input type="text" id="blogPostAuthor" placeholder="e.g. Chef Ilampirai" value="Chef Ilampirai" required>
+            </div>
+
+            <div class="form-field">
+              <label>Culinary Category</label>
+              <select id="blogPostCategory">
+                <option value="Authentic Recipes">Authentic Recipes</option>
+                <option value="Spice Health Benefits">Spice Health Benefits</option>
+                <option value="Kitchen Tips">Kitchen Tips</option>
+                <option value="Grandma Traditions">Grandma Traditions</option>
+                <option value="Festive Specials">Festive Specials</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label>Publication Date</label>
+              <input type="text" id="blogPostDate" placeholder="e.g. Oct 12, 2026">
+            </div>
+
+            <div class="form-field">
+              <label>Cover Emoji / Icon</label>
+              <input type="text" id="blogPostIcon" placeholder="🍲 / 🍛 / 📜 / 🌶️" value="🍲">
+            </div>
+
+            <div class="form-field">
+              <label>Status</label>
+              <select id="blogPostStatus">
+                <option value="Published">Published</option>
+                <option value="Draft">Draft</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 16px;">
+            <label>Short Excerpt / Summary</label>
+            <input type="text" id="blogPostSummary" placeholder="Brief 1-2 sentence hook for readers...">
+          </div>
+
+          <div class="form-field" style="margin-bottom: 20px;">
+            <label>Recipe Content & Culinary Story *</label>
+            <textarea id="blogPostContent" rows="4" placeholder="Detailed culinary story, spice roast temperature, grandma tips, step-by-step instructions..." required></textarea>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <button type="submit" id="saveBlogSubmitBtn" class="btn-admin btn-admin-primary">
+              💾 Publish / Save Article
+            </button>
+            <button type="button" id="cancelBlogEditBtn" class="btn-admin btn-admin-outline" style="display: none;"
+              onclick="cancelBlogEditMode()">
+              Cancel Edit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Published Recipe Articles Table Card -->
+      <div class="admin-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Kitchen Recipe Blogs & Culinary Articles</h2>
+            <span style="font-size: 13px; color: var(--admin-muted);">Manage all culinary posts. Click "✏️ Edit" to update or "+ Write Recipe Post" to add new articles.</span>
+          </div>
+          <button type="button" class="btn-admin btn-admin-primary" onclick="startNewBlogMode()">
+            ➕ Write Recipe Post
+          </button>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th style="width: 50px; text-align: center;">Icon</th>
+                <th>Article Title & Summary</th>
+                <th>Author & Category</th>
+                <th>Date</th>
+                <th>Views / Reads</th>
+                <th>Status</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="blogsTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 7: INVENTORY ALERTS ===================== -->
+    <section id="tab-inventory" class="admin-tab-content">
+      <div class="admin-panel">
+        <div class="panel-header">
+          <h2>⚠️ Low Stock Alerts (Under 25 units)</h2>
+        </div>
+        <div id="inventoryAlertsList">
+          <!-- Rendered via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TAB 8: BEST SELLERS & STOCK ===================== -->
+    <section id="tab-bestsellers" class="admin-tab-content">
+      <div class="admin-panel">
+        <div class="panel-header">
+          <h2>🔥 Best Sellers & Stock Analytics</h2>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Product Name</th>
+                <th>Combo Type</th>
+                <th>Performance Rating</th>
+                <th>Demand Level</th>
+                <th>Available Units</th>
+              </tr>
+            </thead>
+            <tbody id="bestSellersTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+  </div> <!-- /adminAppShell -->
+
+  <!-- ===================== ORDER DETAILS POPUP MODAL ===================== -->
+  <div id="adminOrderModal" class="admin-modal-overlay">
+    <div class="admin-modal-card">
+      <div class="admin-modal-header">
+        <h3>
+          <span>📦 Order Details:</span>
+          <span id="modalOrderId" style="color: var(--admin-blue);">#IK-2026-0000</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeAdminOrderModal()" title="Close Popup">✕</button>
+      </div>
+
+      <div class="admin-modal-body" id="modalOrderBody">
+        <!-- Injected via viewOrderReceipt() -->
+      </div>
+
+      <div class="admin-modal-footer">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <label style="font-size: 13px; font-weight: 600; color: var(--admin-muted);">Update Status:</label>
+          <select id="modalStatusSelect" onchange="handleModalStatusUpdate(this.value)"
+            style="padding: 6px 12px; border-radius: 8px; border: 1px solid var(--admin-border); font-size: 13px;">
+            <option value="Pending">⏳ Pending</option>
+            <option value="Processing">📦 Processing</option>
+            <option value="Shipped">🚚 Shipped</option>
+            <option value="Delivered">✅ Delivered</option>
+            <option value="Cancelled">❌ Cancelled</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-admin btn-admin-outline" onclick="window.print()">🖨️ Print Receipt</button>
+          <button class="btn-admin btn-admin-primary" onclick="closeAdminOrderModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== SHIPMENT & TRACKING DETAILS MODAL (ADMIN ONLY) ===================== -->
+  <div id="adminShipmentModal" class="admin-modal-overlay">
+    <div class="admin-modal-card" style="max-width: 540px;">
+      <div class="admin-modal-header">
+        <h3>
+          <span>🚚 Manage Shipment & Tracking:</span>
+          <span id="shipmentModalOrderId" style="color: var(--admin-blue);">#IK-2026-0000</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeShipmentModal()" title="Close Popup">✕</button>
+      </div>
+
+      <div class="admin-modal-body" style="padding: 24px;">
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; margin-bottom: 18px; font-size: 13px;">
+          <div style="color: var(--admin-muted); font-size: 11px; text-transform: uppercase; font-weight: 700;">Recipient Destination</div>
+          <div id="shipmentModalCustomer" style="font-weight: 600; color: #1e293b; margin-top: 3px;">Customer Name</div>
+          <div style="color: #64748b; font-size: 12px; margin-top: 4px;">
+            ⚠️ Only the store admin can create, edit, update, and delete shipment details. An automated email is triggered immediately to the customer upon saving or deleting.
+          </div>
+        </div>
+
+        <form id="adminShipmentForm" onsubmit="handleSaveShipmentDetails(event)">
+          <div class="form-field" style="margin-bottom: 16px;">
+            <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">
+              Courier / Logistics Partner *
+            </label>
+            <select id="shipmentCarrier" class="form-input" style="width: 100%; padding: 8px 12px; border: 1px solid var(--admin-border); border-radius: 6px;">
+              <option value="Delhivery Express">Delhivery Express</option>
+              <option value="India Post Speed Post">India Post Speed Post</option>
+              <option value="Blue Dart Express">Blue Dart Express</option>
+              <option value="ST Courier (South India)">ST Courier (South India)</option>
+              <option value="DTDC Courier">DTDC Courier</option>
+              <option value="Professional Couriers">The Professional Couriers</option>
+              <option value="Ekart Logistics">Ekart Logistics</option>
+              <option value="Shadowfax">Shadowfax</option>
+              <option value="Direct Home Delivery (Tamil Nadu)">Direct Home Delivery (Tamil Nadu)</option>
+            </select>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 16px;">
+            <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">
+              Tracking Number / AWB Code *
+            </label>
+            <input type="text" id="shipmentTrackingNumber" class="form-input" placeholder="e.g. DEL-893048123 or IP987654321IN" required
+              style="width: 100%; padding: 8px 12px; border: 1px solid var(--admin-border); border-radius: 6px; font-family: monospace; font-size: 14px;">
+            <small style="color: var(--admin-muted); font-size: 11px;">The unique tracking code or consignment number provided by the courier service.</small>
+          </div>
+
+          <div class="form-field" style="margin-bottom: 16px;">
+            <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">
+              Online Tracking URL (Optional)
+            </label>
+            <input type="url" id="shipmentTrackingUrl" class="form-input" placeholder="https://www.delhivery.com/track/package/..."
+              style="width: 100%; padding: 8px 12px; border: 1px solid var(--admin-border); border-radius: 6px; font-size: 13px;">
+          </div>
+
+          <div class="form-field" style="margin-bottom: 16px;">
+            <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 6px;">
+              Shipment Information & Dispatch Notes
+            </label>
+            <textarea id="shipmentNotes" class="form-input" rows="2" placeholder="e.g. Dispatched from Salem warehouse. Package safely packed in tamper-proof pouch."
+              style="width: 100%; padding: 8px 12px; border: 1px solid var(--admin-border); border-radius: 6px; font-size: 13px; resize: vertical;"></textarea>
+          </div>
+
+          <div class="admin-modal-footer" style="padding: 16px 0 0 0; margin-top: 20px; border-top: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <button type="button" id="shipmentDeleteBtn" class="btn-admin" onclick="confirmDeleteShipment()"
+                style="background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; display: none;">
+                🗑️ Delete Shipment Info
+              </button>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" class="btn-admin btn-admin-outline" onclick="closeShipmentModal()">Cancel</button>
+              <button type="submit" class="btn-admin btn-admin-primary">💾 Save & Notify Customer</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== UNIVERSAL DELETE CONFIRMATION POPUP MODAL ===================== -->
+  <div id="deleteConfirmModal" class="admin-modal-overlay">
+    <div class="admin-modal-card" style="max-width: 440px;">
+      <div class="admin-modal-header">
+        <h3 style="color: var(--admin-red);">
+          <span id="deleteModalTitle">🗑️ Confirm Deletion</span>
+        </h3>
+        <button class="modal-close-btn" onclick="closeDeleteConfirmModal()" title="Close Popup">✕</button>
+      </div>
+
+      <div class="admin-modal-body" style="padding: 24px;">
+        <p id="deleteConfirmMessage" style="font-size: 15px; color: var(--admin-text); line-height: 1.5;">
+          Are you sure you want to permanently delete this item?
+        </p>
+      </div>
+
+      <div class="admin-modal-footer" style="justify-content: flex-end; gap: 10px;">
+        <button type="button" class="btn-admin btn-admin-outline" onclick="closeDeleteConfirmModal()">Cancel</button>
+        <button type="button" id="confirmDeleteModalBtn" class="btn-admin" style="background: var(--admin-red); color: white;" onclick="executeDeleteAction()">Delete Permanently</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js?v=12"></script>
+  <script src="js/admin.js?v=12"></script>
+</body>
+
+</html>
